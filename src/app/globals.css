@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+::before,
+::after {
+    /* fix conflict tailwind with vkui */
+    box-sizing: unset;
+}
+
+body {
+    overscroll-behavior-y: none;
+}
+
+@layer utilities {
+  .hover\:banner-shadow:hover {
+    @apply shadow-none;
+    box-shadow: 12px -12px 0px 0px #0077ff;
+  }
+}
+
