@@ -1,4 +1,4 @@
-import ytdl from "@distube/ytdl-core";
+import ytdl from "ytdl-core";
 
 export type VideoData = {
     duration: number;

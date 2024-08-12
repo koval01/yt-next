@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.13.2",
-    "@distube/ytdl-core": "^4.14.4",
     "@reduxjs/toolkit": "^2.2.7",
     "@vidstack/react": "^1.12.6",
     "@vkontakte/icons": "^2.130.0",
@@ -23,7 +22,8 @@
     "react-dom": "^18.3.1",
     "react-i18next": "^15.0.1",
     "react-redux": "^9.1.2",
-    "swr": "^2.2.5"
+    "swr": "^2.2.5",
+    "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
     "@types/node": "^20.14.15",
