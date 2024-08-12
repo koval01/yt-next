@@ -9,30 +9,30 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@cloudflare/next-on-pages": "^1.12.1",
+    "@cloudflare/next-on-pages": "^1.13.2",
     "@distube/ytdl-core": "^4.14.4",
-    "@reduxjs/toolkit": "^2.2.6",
-    "@vidstack/react": "^1.12.5",
-    "@vkontakte/icons": "^2.126.0",
-    "@vkontakte/vkui": "^6.2.2",
+    "@reduxjs/toolkit": "^2.2.7",
+    "@vidstack/react": "^1.12.6",
+    "@vkontakte/icons": "^2.130.0",
+    "@vkontakte/vkui": "^6.5.0",
     "hls.js": "^1.5.14",
     "i18next": "^23.12.2",
     "next": "14.2.5",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-i18next": "^15.0.0",
+    "react-i18next": "^15.0.1",
     "react-redux": "^9.1.2",
     "swr": "^2.2.5"
   },
   "devDependencies": {
-    "@types/node": "^20.14.11",
+    "@types/node": "^20.14.15",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
-    "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.6",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.9",
     "typescript": "^5.5.4"
   }
 }
