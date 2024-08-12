@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -5,7 +7,7 @@ import { Banner, EllipsisText, Flex, Spacing, Skeleton as VKSkeleton } from "@vk
 import { Icon20Verified } from "@vkontakte/icons";
 
 import { VideoData } from "./types";
-import ytdl from "ytdl-core";
+import ytdl from "@distube/ytdl-core";
 
 const Skeleton = () => (
     <Flex direction="column" gap="l" margin="auto">

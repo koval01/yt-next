@@ -1,3 +1,5 @@
+'use client'
+
 import { Skeleton as VKSkeleton } from "@vkontakte/vkui";
 
 import { MediaPlayer, MediaProvider, Poster } from '@vidstack/react';

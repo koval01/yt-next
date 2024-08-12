@@ -1,3 +1,5 @@
+'use client'
+
 import { DisplayTitle, Skeleton as Skeleton } from "@vkontakte/vkui";
 
 const Title = ({ title }: { title: string | undefined }) => (

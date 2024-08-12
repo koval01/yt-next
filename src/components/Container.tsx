@@ -1,3 +1,5 @@
+'use client'
+
 import { Flex } from '@vkontakte/vkui';
 
 import React, { PropsWithChildren } from 'react';

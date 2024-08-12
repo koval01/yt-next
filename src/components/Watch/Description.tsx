@@ -1,3 +1,5 @@
+'use client'
+
 import { Accordion, Div, EllipsisText, Text, Group, Skeleton as VKSkeleton } from "@vkontakte/vkui";
 import { useState } from "react";
 

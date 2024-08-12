@@ -1,3 +1,5 @@
+'use client'
+
 import { Group, Panel, View, PanelHeader, Spacing, Flex, Div } from "@vkontakte/vkui";
 import Player from "./Player";
 import useSWR from 'swr';
