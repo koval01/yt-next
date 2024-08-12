@@ -40,7 +40,7 @@ i18nHook.init({
 function App(props: PropsWithChildren) {
     useEffect(() => {
         i18nHook.changeLanguage(navigator.language.split("-")[0])
-    }, [navigator]);
+    }, []);
 
     return (
         <ConfigProvider platform="ios">

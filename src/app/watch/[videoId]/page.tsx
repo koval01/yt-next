@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import { Panel, View, PanelHeader } from "@vkontakte/vkui";
 
 import { useSearchParams } from 'next/navigation'

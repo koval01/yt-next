@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import ytdl, { videoInfo } from "@distube/ytdl-core";
 
 export async function GET(
