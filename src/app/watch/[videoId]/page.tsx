@@ -10,14 +10,14 @@ import { useSearchParams } from "next/navigation";
 
 export default function Watch({ params }: { params: { videoId: string } }) {
     const query = useSearchParams();
-    const timeStart = parseInt(query.get("t") || "0");
+    const time_start = parseInt(query.get("t") || "0");
 
     return (
         <View activePanel="home">
             <Panel id="home">
                 <PanelHeader>YouTube Next</PanelHeader>
                 <Container>
-                    <WatchItem videoId={params.videoId} timeStart={timeStart} />
+                    <WatchItem videoId={params.videoId} time_start={time_start} />
                 </Container>
             </Panel>
         </View>

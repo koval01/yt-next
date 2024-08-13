@@ -14,7 +14,7 @@ const fetcher = (url: string): Promise<VideoData> => fetch(url).then((res) => re
 
 interface ContainerProps {
     videoId: string;
-    timeStart: number;
+    time_start: number;
 }
 
 const Content = ({ data }: { data: VideoData | undefined }) => (
@@ -30,7 +30,7 @@ const Content = ({ data }: { data: VideoData | undefined }) => (
     </Div>
 )
 
-export default function Container({ videoId, timeStart }: ContainerProps) {
+export default function Container({ videoId, time_start }: ContainerProps) {
     const { data, error } = useSWR<VideoData>(`/api/video/${videoId}`, fetcher);
 
     // if (error) return <div>Failed to load</div>
@@ -38,7 +38,7 @@ export default function Container({ videoId, timeStart }: ContainerProps) {
     
     if (data) {
         // add client-side params
-        data.timeStart = timeStart;
+        data.time_start = time_start;
     }
 
     return (

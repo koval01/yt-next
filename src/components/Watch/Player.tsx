@@ -20,14 +20,14 @@ const PlayerItem = ({ data }: { data: VideoData }) => {
     return (
         <MediaPlayer
             src={{
-                src: data.manifestUrl,
+                src: data.manifest_url,
                 type: 'application/x-mpegurl'
             }}
             autoPlay={true}
             aspectRatio="16/9"
             load="visible"
             posterLoad="visible"
-            currentTime={data.timeStart}
+            currentTime={data.time_start}
             fullscreenOrientation="none"
         >
             <MediaProvider>
