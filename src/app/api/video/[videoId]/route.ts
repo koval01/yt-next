@@ -1,5 +1,3 @@
-import ytdl, { videoInfo } from "@distube/ytdl-core";
-
 export async function GET(
     request: Request,
     { params }: { params: { videoId: string } }
@@ -25,19 +23,8 @@ export async function GET(
         }
 
         const data = await apiResponse.json();
-        const ytdlData: videoInfo = await ytdl.getBasicInfo(params.videoId);
 
-        const result = {
-            relatedVideos: ytdlData.related_videos,
-            videoDetails: ytdlData.videoDetails,
-            manifestUrl: data.manifest_url,
-            duration: data.duration,
-            wasLive: data.was_live,
-            isLive: data.is_live,
-            id: data.id
-        };
-
-        return new Response(JSON.stringify(result), {
+        return new Response(JSON.stringify(data), {
             headers: { 'Content-Type': 'application/json' },
         });
 

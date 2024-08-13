@@ -15,7 +15,7 @@ const Skeleton = () => (
 )
 
 const PlayerItem = ({ data }: { data: VideoData }) => {
-    const thumbnail = encodeURIComponent(data.videoDetails.thumbnails.at(-1)?.url || "");
+    const thumbnail = encodeURIComponent(data?.thumbnail);
     
     return (
         <MediaPlayer
@@ -34,12 +34,12 @@ const PlayerItem = ({ data }: { data: VideoData }) => {
                 <Poster
                     className="vds-poster"
                     src={`/_next/image?url=${thumbnail}&w=768&q=70`}
-                    alt={data.videoDetails.title}
+                    alt={data?.title}
                 />
             </MediaProvider>
             <DefaultVideoLayout
                 icons={defaultLayoutIcons}
-                title={data.videoDetails.title}
+                title={data?.title}
             />
         </MediaPlayer>
     )

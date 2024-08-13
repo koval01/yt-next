@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.13.2",
-    "@distube/ytdl-core": "^4.14.4",
     "@reduxjs/toolkit": "^2.2.7",
     "@vidstack/react": "^1.12.8",
     "@vkontakte/icons": "^2.130.0",

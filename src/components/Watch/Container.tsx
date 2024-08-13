@@ -9,7 +9,6 @@ import Description from "./Description";
 import Title from "./Title";
 
 import { VideoData } from "./types";
-import RelatedVideos from "./RelatedVideos";
 
 const fetcher = (url: string): Promise<VideoData> => fetch(url).then((res) => res.json());
 
@@ -23,11 +22,11 @@ const Content = ({ data }: { data: VideoData | undefined }) => (
         <Player data={data} />
         <Spacing size={12} />
         <Flex direction="column" gap="2xl">
-            <Title title={data?.videoDetails.title} />
-            <Description description={data?.videoDetails.description} />
+            <Title title={data?.title} />
+            <Description description={data?.description} />
         </Flex>
         <Spacing size={16} />
-        <RelatedVideos data={data} />
+        {/* <RelatedVideos data={data} /> */}
     </Div>
 )
 

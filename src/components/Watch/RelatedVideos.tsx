@@ -7,7 +7,6 @@ import { Banner, EllipsisText, Flex, Spacing, Skeleton as VKSkeleton } from "@vk
 import { Icon20Verified } from "@vkontakte/icons";
 
 import { VideoData } from "./types";
-import ytdl from "@distube/ytdl-core";
 
 const Skeleton = () => (
     <Flex direction="column" gap="l" margin="auto">
@@ -37,29 +36,29 @@ const Skeleton = () => (
     </Flex>
 )
 
-const Author = ({ author }: { author: ytdl.Author | string }) => {
+const Author = ({ author }: { author: any }) => {
     if (typeof author === 'string') {
         return (<span>{author}</span>)
     }
     return (
         <Flex direction="row" gap="xs" className="m-0">
-            <span>{author.name}</span>
-            {author.verified && <Icon20Verified />}
+            <span>{author?.name}</span>
+            {author?.verified && <Icon20Verified />}
         </Flex>
     )
 }
 
-const Details = ({ data }: { data: ytdl.relatedVideo }) => {
+const Details = ({ data }: { data: any }) => {
     return (
         <Flex className="m-0">
-            <span>{data.short_view_count_text}</span>
+            <span>{data?.short_view_count_text}</span>
             <span>•</span>
-            <span>{data.published}</span>
+            <span>{data?.published}</span>
         </Flex>
     )
 }
 
-const VideoItem = ({ data }: { data: ytdl.relatedVideo }) => {
+const VideoItem = ({ data }: { data: any }) => {
     const router = useRouter();
     const thumbnail = data.thumbnails.at(-1);
 
@@ -95,7 +94,7 @@ const VideoItem = ({ data }: { data: ytdl.relatedVideo }) => {
 
 const Videos = ({ data }: { data: VideoData }) => (
     <Flex direction="column" gap="l" margin="auto">
-        {data.relatedVideos.map(v => (<VideoItem key={v.id} data={v} />))}
+        {/* {data.relatedVideos.map(v => (<VideoItem key={v.id} data={v} />))} */}
     </Flex>
 )
 

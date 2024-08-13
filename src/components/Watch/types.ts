@@ -1,5 +1,3 @@
-import ytdl from "@distube/ytdl-core";
-
 export type VideoData = {
     duration: number;
     timeStart: number;
@@ -7,6 +5,7 @@ export type VideoData = {
     isLive: boolean;
     wasLive: boolean;
     manifestUrl: string;
-    relatedVideos: ytdl.relatedVideo[];
-    videoDetails: ytdl.MoreVideoDetails;
+    title: string;
+    description: string;
+    thumbnail: string;
 };
