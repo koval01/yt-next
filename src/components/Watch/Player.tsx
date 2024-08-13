@@ -2,8 +2,10 @@
 
 import { Skeleton as VKSkeleton } from "@vkontakte/vkui";
 
-import { MediaPlayer, MediaProvider, Poster } from '@vidstack/react';
+import { isHLSProvider, MediaPlayer, MediaProvider, MediaProviderAdapter, MediaProviderChangeEvent, Poster } from '@vidstack/react';
 import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
+
+import HLS from 'hls.js';
 
 import '@vidstack/react/player/styles/default/theme.css';
 import '@vidstack/react/player/styles/default/layouts/video.css';
@@ -16,6 +18,15 @@ const Skeleton = () => (
 
 const PlayerItem = ({ data }: { data: VideoData }) => {
     const thumbnail = encodeURIComponent(data?.thumbnail);
+
+    function onProviderChange(
+        provider: MediaProviderAdapter | null,
+        _: MediaProviderChangeEvent,
+    ) {
+        if (isHLSProvider(provider)) {
+            provider.library = HLS;
+        }
+    }
     
     return (
         <MediaPlayer
@@ -29,6 +40,7 @@ const PlayerItem = ({ data }: { data: VideoData }) => {
             posterLoad="visible"
             currentTime={data.time_start}
             fullscreenOrientation="none"
+            onProviderChange={onProviderChange}
         >
             <MediaProvider>
                 <Poster

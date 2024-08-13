@@ -21,9 +21,9 @@ const Content = ({ data }: { data: VideoData | undefined }) => (
     <Div>
         <Player data={data} />
         <Spacing size={12} />
-        <Flex direction="column" gap="2xl">
+        <Flex direction="column" gap="xl">
             <Title title={data?.title} />
-            <Description description={data?.description} />
+            <Description data={data} />
         </Flex>
         <Spacing size={16} />
         {/* <RelatedVideos data={data} /> */}

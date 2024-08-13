@@ -17,6 +17,7 @@
     "@vidstack/react": "^1.12.8",
     "@vkontakte/icons": "^2.130.0",
     "@vkontakte/vkui": "^6.5.0",
+    "dayjs": "^1.11.12",
     "hls.js": "^1.5.14",
     "i18next": "^23.12.2",
     "next": "14.2.5",

@@ -1,11 +1,19 @@
 'use client'
 
-import { Accordion, Div, EllipsisText, Text, Group, Skeleton as VKSkeleton } from "@vkontakte/vkui";
+import { Accordion, Div, EllipsisText, Text, Group, Skeleton as VKSkeleton, Flex } from "@vkontakte/vkui";
 import { useState } from "react";
+import { VideoData } from "./types";
+import Meta from "./Meta";
 
 const Sekeleton = () => (
-    <Div className="pl-1">
+    <Div className="pl-3">
         <VKSkeleton height={20} width={9999} />
+    </Div>
+)
+
+const DescriptionContainer = ({ children }: { children: JSX.Element }) => (
+    <Div className="p-0 md:p-2 md:pt-0.5">
+        {children}
     </Div>
 )
 
@@ -13,30 +21,37 @@ const DescriptionItem = ({ text }: { text: string }) => {
     const [opened, setOpened] = useState<boolean>(false);
 
     return (
-        <Accordion
-            expanded={opened}
-            onChange={() => setOpened(!opened)}
-        >
-            <Accordion.Summary>
-                <EllipsisText className="opacity-60">
-                    {text}
-                </EllipsisText>
-            </Accordion.Summary>
-            <Accordion.Content>
-                <Div>
-                    <Text className="whitespace-pre-wrap">
+        <DescriptionContainer>
+            <Accordion
+                expanded={opened}
+                onChange={() => setOpened(!opened)}
+            >
+                <Accordion.Summary>
+                    <EllipsisText className="opacity-60">
                         {text}
-                    </Text>
-                </Div>
-            </Accordion.Content>
-        </Accordion>
+                    </EllipsisText>
+                </Accordion.Summary>
+                <Accordion.Content>
+                    <Div>
+                        <Text className="whitespace-pre-wrap">
+                            {text}
+                        </Text>
+                    </Div>
+                </Accordion.Content>
+            </Accordion>
+        </DescriptionContainer>
     )
 }
 
-const Description = ({ description }: { description: string | null | undefined }) => (
-    <Div className="max-w-full m-auto p-2 pl-0">
-        <Group className="mx-3">
-            {description ? <DescriptionItem text={description} /> : <Sekeleton />}
+const _DescriptionItem = ({ data }: { data: VideoData | undefined }) => (
+    data ? <DescriptionItem text={data?.description} /> : <Sekeleton />
+)
+
+const Description = ({ data }: { data: VideoData | undefined }) => (
+    <Div className="max-w-full m-auto mt-3 p-0 md:p-2">
+        <Group>
+            <Meta data={data} />
+            <_DescriptionItem data={data} />
         </Group>
     </Div>
 )

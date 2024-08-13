@@ -8,4 +8,6 @@ export type VideoData = {
     title: string;
     description: string;
     thumbnail: string;
+    timestamp: number;
+    view_count: number;
 };
