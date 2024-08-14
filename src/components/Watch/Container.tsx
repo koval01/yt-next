@@ -1,5 +1,7 @@
 'use client'
 
+import { useMemo } from "react";
+
 import { Group, Panel, View, PanelHeader, Spacing, Flex, Div } from "@vkontakte/vkui";
 import Player from "./Player";
 import useSWR from 'swr';
@@ -31,7 +33,14 @@ const Content = ({ data }: { data: VideoData | undefined }) => (
 )
 
 export default function Container({ videoId, time_start }: ContainerProps) {
-    const { data, error } = useSWR<VideoData>(`/api/video/${videoId}`, fetcher);
+    const { data, error } = useSWR<VideoData>(`/api/video/${videoId}`, fetcher, {
+        revalidateOnFocus: false, // prevent re-fetching when the user focuses on the page
+    });
+
+    const modifiedData = useMemo(() => {
+        if (!data) return undefined;
+        return { ...data, time_start };
+    }, [data, time_start]);
 
     // if (error) return <div>Failed to load</div>
     // if (!data) return <div>Loading...</div>
@@ -47,7 +56,7 @@ export default function Container({ videoId, time_start }: ContainerProps) {
                 <PanelHeader>YouTube Next</PanelHeader>
                 <GlobalContainer>
                     <Group>
-                        <Content data={data} />
+                        <Content data={modifiedData} />
                     </Group>
                 </GlobalContainer>
             </Panel>
