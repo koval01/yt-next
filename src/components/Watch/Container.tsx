@@ -37,7 +37,7 @@ const Content = ({ data }: { data: VideoData | undefined }) => (
 )
 
 const ContainerItem: React.FC<ContainerItemProps> = ({ data, error }) => {
-    return error ? <>1</> : <Content data={data} />;
+    return error ? <></> : <Content data={data} />;
 };
 
 export default function Container({ videoId, time_start }: ContainerProps) {
@@ -53,9 +53,11 @@ export default function Container({ videoId, time_start }: ContainerProps) {
                             siteKey={process.env.NEXT_PUBLIC_TURNSTILE as string}
                             onToken={(newToken) => setToken(newToken)}
                         />
-                        <SWRComponent videoId={videoId} time_start={time_start} secret={token}>
-                            {(data, error) => <ContainerItem data={data} error={error} />}
-                        </SWRComponent>
+                        {token ?
+                            <SWRComponent videoId={videoId} time_start={time_start} secret={token}>
+                                {(data, error) => <ContainerItem data={data} error={error} />}
+                            </SWRComponent>
+                            : <></>}
                     </Group>
                 </GlobalContainer>
             </Panel>
