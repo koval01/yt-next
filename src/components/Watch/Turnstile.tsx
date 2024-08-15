@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 
 type InvisibleTurnstileProps = {
@@ -9,21 +9,24 @@ type InvisibleTurnstileProps = {
 const InvisibleTurnstile: React.FC<InvisibleTurnstileProps> = ({ siteKey, onToken }) => {
     const ref = useRef<TurnstileInstance>(null);
 
-    const handleToken = () => {
+    const handleToken = useCallback(() => {
         const token = ref.current?.getResponse() || null;
         onToken(token);
-    };
+    }, [onToken]);
 
     useEffect(() => {
         handleToken();
-    }, []);
+    }, [handleToken]);
 
     return (
         <Turnstile
             ref={ref}
             siteKey={siteKey}
             options={{
-                size: "invisible"
+                retry: "never",
+                size: "invisible",
+                execution: "render",
+                refreshExpired: "never"
             }}
             onSuccess={(token: string) => onToken(token)}
         />
