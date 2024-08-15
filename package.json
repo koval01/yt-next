@@ -13,13 +13,14 @@
   },
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.13.2",
+    "@marsidev/react-turnstile": "^0.7.2",
     "@reduxjs/toolkit": "^2.2.7",
-    "@vidstack/react": "^1.12.8",
-    "@vkontakte/icons": "^2.130.0",
+    "@vidstack/react": "^1.12.9",
+    "@vkontakte/icons": "^2.133.0",
     "@vkontakte/vkui": "^6.5.0",
     "dayjs": "^1.11.12",
     "hls.js": "^1.5.14",
-    "i18next": "^23.12.2",
+    "i18next": "^23.12.3",
     "next": "14.2.5",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
@@ -35,7 +36,7 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.5",
     "postcss": "^8.4.41",
-    "tailwindcss": "^3.4.9",
+    "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4"
   }
 }

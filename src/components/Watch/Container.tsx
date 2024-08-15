@@ -1,18 +1,22 @@
 'use client'
 
-import { useMemo } from "react";
+import { useState } from "react";
 
 import { Group, Panel, View, PanelHeader, Spacing, Flex, Div } from "@vkontakte/vkui";
 import Player from "./Player";
-import useSWR from 'swr';
 
 import GlobalContainer from "@/components/Container";
 import Description from "./Description";
 import Title from "./Title";
+import SWRComponent from "./SWR";
+import InvisibleTurnstile from "./Turnstile";
 
 import { VideoData } from "./types";
 
-const fetcher = (url: string): Promise<VideoData> => fetch(url).then((res) => res.json());
+interface ContainerItemProps {
+    data: VideoData | undefined;
+    error: any;
+};
 
 interface ContainerProps {
     videoId: string;
@@ -32,23 +36,12 @@ const Content = ({ data }: { data: VideoData | undefined }) => (
     </Div>
 )
 
+const ContainerItem: React.FC<ContainerItemProps> = ({ data, error }) => {
+    return error ? <>1</> : <Content data={data} />;
+};
+
 export default function Container({ videoId, time_start }: ContainerProps) {
-    const { data, error } = useSWR<VideoData>(`/api/video/${videoId}`, fetcher, {
-        revalidateOnFocus: false, // prevent re-fetching when the user focuses on the page
-    });
-
-    const modifiedData = useMemo(() => {
-        if (!data) return undefined;
-        return { ...data, time_start };
-    }, [data, time_start]);
-
-    // if (error) return <div>Failed to load</div>
-    // if (!data) return <div>Loading...</div>
-    
-    if (data) {
-        // add client-side params
-        data.time_start = time_start;
-    }
+    const [token, setToken] = useState<string | null>(null);
 
     return (
         <View activePanel="home">
@@ -56,7 +49,13 @@ export default function Container({ videoId, time_start }: ContainerProps) {
                 <PanelHeader>YouTube Next</PanelHeader>
                 <GlobalContainer>
                     <Group>
-                        <Content data={modifiedData} />
+                        <InvisibleTurnstile
+                            siteKey={process.env.NEXT_PUBLIC_TURNSTILE as string}
+                            onToken={(newToken) => setToken(newToken)}
+                        />
+                        <SWRComponent videoId={videoId} time_start={time_start} secret={token}>
+                            {(data, error) => <ContainerItem data={data} error={error} />}
+                        </SWRComponent>
                     </Group>
                 </GlobalContainer>
             </Panel>
