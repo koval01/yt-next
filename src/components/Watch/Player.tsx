@@ -10,6 +10,8 @@ import HLS from 'hls.js';
 import '@vidstack/react/player/styles/default/theme.css';
 import '@vidstack/react/player/styles/default/layouts/video.css';
 
+import { CustomHasher } from "@/lib/sign";
+
 import { VideoData } from "./types";
 
 const Skeleton = () => (
@@ -18,6 +20,7 @@ const Skeleton = () => (
 
 const PlayerItem = ({ data }: { data: VideoData }) => {
     const thumbnail = encodeURIComponent(data?.thumbnail);
+    const hasher = new CustomHasher();
 
     function onProviderChange(
         provider: MediaProviderAdapter | null,
@@ -25,6 +28,11 @@ const PlayerItem = ({ data }: { data: VideoData }) => {
     ) {
         if (isHLSProvider(provider)) {
             provider.library = HLS;
+            provider.config = {
+                xhrSetup(xhr, url) {
+                    xhr.setRequestHeader('X-Sign', hasher.customHash(url));
+                },
+            };
         }
     }
     
