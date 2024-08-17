@@ -41,5 +41,6 @@ const InvisibleTurnstile = forwardRef<{
         />
     );
 });
+InvisibleTurnstile.displayName = 'InvisibleTurnstile';
 
 export default InvisibleTurnstile;
