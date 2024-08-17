@@ -6,6 +6,7 @@ import Player from "./Player";
 import GlobalContainer from "@/components/Container";
 import Description from "./Description";
 import Title from "./Title";
+import Comments from "./Comments";
 import SWRComponent from "./SWR";
 
 import { VideoData } from "./types";
@@ -26,12 +27,13 @@ const Content = ({ data, playerOnError }: ContentProps) => (
     <Div>
         <Player data={data} onError={playerOnError} />
         <Spacing size={12} />
-        <Flex direction="column" gap="xl">
+        <Flex direction="column" gap="xl" className="max-w-full">
             <Title title={data?.title} />
             <Description data={data} />
         </Flex>
-        <Spacing size={16} />
+        <Spacing size={8} />
         {/* <RelatedVideos data={data} /> */}
+        <Comments data={data} />
     </Div>
 )
 

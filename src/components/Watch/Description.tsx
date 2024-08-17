@@ -48,8 +48,8 @@ const _DescriptionItem = ({ data }: { data: VideoData | undefined }) => (
 )
 
 const Description = ({ data }: { data: VideoData | undefined }) => (
-    <Div className="max-w-full w-full m-auto mt-3 p-0 md:p-2">
-        <Group>
+    <Div className="max-w-full w-full m-auto mt-3">
+        <Group className="m-0">
             <Meta data={data} />
             <_DescriptionItem data={data} />
         </Group>
