@@ -1,7 +1,7 @@
 'use client'
 
 import { Flex, Paragraph, Text, Group, RichCell, Skeleton as VKSkeleton, DisplayTitle, Caption, Headline, Separator } from "@vkontakte/vkui";
-import { Icon20Like, Icon28CommentOutline } from "@vkontakte/icons";
+import { Icon20Like, Icon20Verified, Icon28CommentOutline } from "@vkontakte/icons";
 
 import { VideoData, Comment } from "./types";
 import NextAvatar from "../NextAvatar";
@@ -55,7 +55,7 @@ const CommentItem = ({ data }: { data: Comment }) => (
     <RichCell
         before={<NextAvatar size={48} src={data.author_thumbnail} />}
         text={
-            <div className="max-w-full">
+            <div className="max-w-full whitespace-normal">
                 <Paragraph>{data.text}</Paragraph>
             </div>
         }
@@ -67,7 +67,17 @@ const CommentItem = ({ data }: { data: Comment }) => (
             </Flex>
         }
     >
-        <Headline level="2" weight="1">{data.author}</Headline>
+        <Headline level="2" weight="1" className={
+            data.author_is_uploader ? 
+                "bg-[--vkui--color_background_secondary--active] rounded-xl py-0.5 px-2 w-fit"
+            : ""}>
+                <div className="flex gap-1">
+                    {data.author}
+                    {data.author_is_verified ? 
+                        <Icon20Verified className="text-[--vkui--color_background_accent]" />
+                    : ""}
+                </div>
+            </Headline>
     </RichCell>
 );
 

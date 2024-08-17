@@ -41,10 +41,10 @@ const Author = ({ author }: { author: any }) => {
         return (<span>{author}</span>)
     }
     return (
-        <Flex direction="row" gap="xs" className="m-0">
+        <div className="flex gap-2">
             <span>{author?.name}</span>
             {author?.verified && <Icon20Verified />}
-        </Flex>
+        </div>
     )
 }
 
