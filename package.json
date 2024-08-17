@@ -15,7 +15,6 @@
     "@cloudflare/next-on-pages": "^1.13.2",
     "@marsidev/react-turnstile": "^0.7.2",
     "@reduxjs/toolkit": "^2.2.7",
-    "@sentry/nextjs": "^8.26.0",
     "@vidstack/react": "^1.12.9",
     "@vkontakte/icons": "^2.133.0",
     "@vkontakte/vkui": "^6.5.0",
