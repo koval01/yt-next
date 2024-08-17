@@ -2,7 +2,7 @@
 
 import { Skeleton as VKSkeleton } from "@vkontakte/vkui";
 
-import { isHLSProvider, MediaPlayer, MediaProvider, MediaProviderAdapter, MediaProviderChangeEvent, Poster } from '@vidstack/react';
+import { isHLSProvider, MediaErrorDetail, MediaErrorEvent, MediaPlayer, MediaProvider, MediaProviderAdapter, MediaProviderChangeEvent, Poster } from '@vidstack/react';
 import { defaultLayoutIcons, DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 
 import HLS from 'hls.js';
@@ -14,12 +14,17 @@ import { CustomHasher } from "@/lib/sign";
 
 import { VideoData } from "./types";
 
+interface PlayerItemProps { 
+    data: VideoData | undefined, 
+    onError?: ((detail: MediaErrorDetail, nativeEvent: MediaErrorEvent) => void) | undefined 
+}
+
 const Skeleton = () => (
     <VKSkeleton className="w-full aspect-video" />
 )
 
-const PlayerItem = ({ data }: { data: VideoData }) => {
-    const thumbnail = encodeURIComponent(data?.thumbnail);
+const PlayerItem = ({ data, onError }: PlayerItemProps) => {
+    const thumbnail = encodeURIComponent(data?.thumbnail || "");
     const hasher = new CustomHasher();
 
     function onProviderChange(
@@ -39,16 +44,17 @@ const PlayerItem = ({ data }: { data: VideoData }) => {
     return (
         <MediaPlayer
             src={{
-                src: data.manifest_url,
+                src: data?.manifest_url || "",
                 type: 'application/x-mpegurl'
             }}
             autoPlay={true}
             aspectRatio="16/9"
             load="visible"
             posterLoad="visible"
-            currentTime={data.time_start}
+            currentTime={data?.time_start || 0}
             fullscreenOrientation="none"
             onProviderChange={onProviderChange}
+            onError={onError}
         >
             <MediaProvider>
                 <Poster
@@ -65,8 +71,8 @@ const PlayerItem = ({ data }: { data: VideoData }) => {
     )
 }
 
-const Player = ({ data }: { data: any }) => (
-    !data ? <Skeleton /> : <PlayerItem data={data} />
+const Player = ({ data, onError }: PlayerItemProps) => (
+    !data ? <Skeleton /> : <PlayerItem data={data} onError={onError} />
 )
 
 export default Player;

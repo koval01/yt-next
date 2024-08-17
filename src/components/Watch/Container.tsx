@@ -9,20 +9,22 @@ import Title from "./Title";
 import SWRComponent from "./SWR";
 
 import { VideoData } from "./types";
+import { MediaErrorDetail, MediaErrorEvent } from "@vidstack/react";
 
-interface ContainerItemProps {
-    data: VideoData | undefined;
-    error: any;
-};
+interface ContentProps { 
+    data: VideoData | undefined, 
+    error: any,
+    playerOnError: ((detail: MediaErrorDetail, nativeEvent: MediaErrorEvent) => void) | undefined 
+}
 
 interface ContainerProps {
     videoId: string;
     time_start: number;
 }
 
-const Content = ({ data }: { data: VideoData | undefined }) => (
+const Content = ({ data, playerOnError }: ContentProps) => (
     <Div>
-        <Player data={data} />
+        <Player data={data} onError={playerOnError} />
         <Spacing size={12} />
         <Flex direction="column" gap="xl">
             <Title title={data?.title} />
@@ -33,10 +35,6 @@ const Content = ({ data }: { data: VideoData | undefined }) => (
     </Div>
 )
 
-const ContainerItem: React.FC<ContainerItemProps> = ({ data, error }) => {
-    return error ? <></> : <Content data={data} />;
-};
-
 export default function Container({ videoId, time_start }: ContainerProps) {
     return (
         <View activePanel="home">
@@ -45,7 +43,7 @@ export default function Container({ videoId, time_start }: ContainerProps) {
                 <GlobalContainer>
                     <Group>
                         <SWRComponent videoId={videoId} time_start={time_start}>
-                            {(data, error) => <ContainerItem data={data} error={error} />}
+                            {(data, error, handleRefetch) => <Content data={data} error={error} playerOnError={handleRefetch} />}
                         </SWRComponent>
                     </Group>
                 </GlobalContainer>

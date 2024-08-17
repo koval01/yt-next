@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 
 type InvisibleTurnstileProps = {
@@ -6,11 +6,13 @@ type InvisibleTurnstileProps = {
     onToken: (token: string | null) => void;
 };
 
-const InvisibleTurnstile: React.FC<InvisibleTurnstileProps> = ({ siteKey, onToken }) => {
-    const ref = useRef<TurnstileInstance>(null);
+const InvisibleTurnstile = forwardRef<{
+    reset: () => void;
+}, InvisibleTurnstileProps>(({ siteKey, onToken }, ref) => {
+    const turnstileRef = useRef<TurnstileInstance>(null);
 
     const handleToken = useCallback(() => {
-        const token = ref.current?.getResponse() || null;
+        const token = turnstileRef.current?.getResponse() || null;
         onToken(token);
     }, [onToken]);
 
@@ -18,9 +20,16 @@ const InvisibleTurnstile: React.FC<InvisibleTurnstileProps> = ({ siteKey, onToke
         handleToken();
     }, [handleToken]);
 
+    // Expose the reset method to the parent component via the ref
+    useImperativeHandle(ref, () => ({
+        reset: () => {
+            turnstileRef.current?.reset();
+        },
+    }));
+
     return (
         <Turnstile
-            ref={ref}
+            ref={turnstileRef}
             siteKey={siteKey}
             options={{
                 retry: "never",
@@ -31,6 +40,6 @@ const InvisibleTurnstile: React.FC<InvisibleTurnstileProps> = ({ siteKey, onToke
             onSuccess={(token: string) => onToken(token)}
         />
     );
-};
+});
 
 export default InvisibleTurnstile;
