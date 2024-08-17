@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import useSWR from 'swr';
 import { VideoData } from './types';
+import InvisibleTurnstile from './Turnstile';
 
 const fetcher = (url: string, apiSecret: string): Promise<VideoData> => fetch(url, {
     headers: {
@@ -11,14 +12,15 @@ const fetcher = (url: string, apiSecret: string): Promise<VideoData> => fetch(ur
 type SWRComponentProps = {
     videoId: string;
     time_start: number;
-    secret: string | null;
     children: (data: VideoData | undefined, error: any) => ReactNode;
 };
 
-const SWRComponent: React.FC<SWRComponentProps> = ({ videoId, time_start, secret, children }) => {
+const SWRComponent: React.FC<SWRComponentProps> = ({ videoId, time_start, children }) => {
+    const [token, setToken] = useState<string | null>(null);
+    
     const { data, error } = useSWR<VideoData>(
-        [`https://${process.env.NEXT_PUBLIC_API_HOST}/v1/video/${videoId}`, secret], 
-        ([url, apiSecret]: [string, string]) => fetcher(url, apiSecret), 
+        token ? [`https://${process.env.NEXT_PUBLIC_API_HOST}/v1/video/${videoId}`, token] : null,
+        ([url, apiSecret]: [string, string]) => fetcher(url, apiSecret),
         {
             revalidateOnFocus: false,
         }
@@ -28,7 +30,15 @@ const SWRComponent: React.FC<SWRComponentProps> = ({ videoId, time_start, secret
         data.time_start = time_start;
     }
 
-    return children(data, error);
+    return (
+        <>
+            <InvisibleTurnstile
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE as string}
+                onToken={(newToken) => setToken(newToken)}
+            />
+            {children(data, error)}
+        </>
+    );
 };
 
 export default SWRComponent;
