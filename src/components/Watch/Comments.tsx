@@ -1,13 +1,17 @@
 'use client'
 
 import { Flex, Paragraph, Text, Group, RichCell, Skeleton as VKSkeleton, DisplayTitle, Caption, Headline, Separator } from "@vkontakte/vkui";
-import { Icon20Like, Icon20Verified, Icon28CommentOutline } from "@vkontakte/icons";
+import { Icon20Like, Icon20LikeCircleFillRed, Icon20Pin, Icon20Verified, Icon28CommentOutline } from "@vkontakte/icons";
 
 import { VideoData, Comment } from "./types";
 import NextAvatar from "../NextAvatar";
 
+import { clsx } from 'clsx';
+
+import { nFormatter } from "@/lib/format";
+
 const SkeletonHeader = () => (
-    <Flex gap="s" className="p-4 md:pl-6">
+    <Flex gap="s" className="p-4">
         <Flex className="m-0">
             <DisplayTitle level="3" className="mr-2">
                 <VKSkeleton width={96} />
@@ -51,44 +55,74 @@ const Skeleton = () => (
     </Flex>
 );
 
+const MetaContainer = ({ children }: { children: JSX.Element[] }) => (
+    <Flex gap="s">
+        {children}
+    </Flex>
+)
+
+const Likes = ({ data }: { data: Comment }) => (
+    <MetaContainer>
+        <Icon20Like className="text-[--vkui--color_accent_red]" />
+        <Caption className="leading-5">{nFormatter(data?.like_count || 0)}</Caption>
+    </MetaContainer>
+)
+
+const Favorited = () => (
+    <MetaContainer>
+        <Icon20LikeCircleFillRed />
+        <Caption className="leading-5">by author</Caption>
+    </MetaContainer>
+);
+
+const Author = ({ data }: { data: Comment }) => (
+    <Headline level="2" weight="1" className="pb-1 leading-5">
+        <div className="flex gap-2">
+            <div className={clsx(data.author_is_uploader && "bg-[--vkui--color_background_secondary--active] rounded-xl py-0.5 px-2 w-fit", "flex gap-1")}>
+                {data.author}
+                {data.author_is_verified && <Icon20Verified className="text-[--vkui--color_background_accent]" />}
+            </div>
+            {data.is_pinned && <Icon20Pin className="text-[--vkui--color_text_secondary]" />}
+        </div>
+    </Headline>
+)
+
 const CommentItem = ({ data }: { data: Comment }) => (
     <RichCell
-        before={<NextAvatar size={48} src={data.author_thumbnail} />}
+        before={
+            <NextAvatar
+                size={48}
+                src={data.author_thumbnail}
+                initials={data.author.replace("@", "").slice(0, 1)}
+                gradientColor={Math.floor(Math.random() * 6) + 1} />
+        }
         text={
             <div className="max-w-full whitespace-normal">
-                <Paragraph>{data.text}</Paragraph>
+                <Paragraph className="select-text">
+                    {data.text}
+                </Paragraph>
             </div>
         }
         caption={data.time_text}
         bottom={
-            <Flex gap="s">
-                <Icon20Like className="text-[--vkui--color_accent_red]" />
-                <Caption className="leading-5">{data.like_count}</Caption>
+            <Flex>
+                <Likes data={data} />
+                {data.is_favorited && <Favorited />}
             </Flex>
         }
     >
-        <Headline level="2" weight="1" className={
-            data.author_is_uploader ? 
-                "bg-[--vkui--color_background_secondary--active] rounded-xl py-0.5 px-2 w-fit"
-            : ""}>
-                <div className="flex gap-1">
-                    {data.author}
-                    {data.author_is_verified ? 
-                        <Icon20Verified className="text-[--vkui--color_background_accent]" />
-                    : ""}
-                </div>
-            </Headline>
+        <Author data={data} />
     </RichCell>
 );
 
 const CommentsHeader = ({ count }: { count: number }) => (
-    <Flex gap="s" className="p-4 md:pl-6">
+    <Flex gap="s" className="p-4">
         <Flex className="m-0">
-            <DisplayTitle level="3" className="mr-2">Comments</DisplayTitle>
             <Flex className="m-0" gap="xs">
-                <Text className="leading-7" weight="1">{count}</Text>
+                <Text className="leading-7" weight="1">Top {count}</Text>
                 <Icon28CommentOutline />
             </Flex>
+            <DisplayTitle level="3" className="mr-2">Comments</DisplayTitle>
         </Flex>
     </Flex>
 );

@@ -3,23 +3,24 @@ import useSWR from 'swr';
 import { VideoData } from './types';
 import InvisibleTurnstile from './Turnstile';
 
-const fetcher = (url: string, apiSecret: string): Promise<VideoData> => fetch(url, {
-    headers: {
-        'x-secret': apiSecret
-    }
-}).then((res) => res.json());
+const fetcher = (url: string, apiSecret: string): Promise<VideoData> =>
+    fetch(url, {
+        headers: {
+            'x-secret': apiSecret
+        }
+    }).then((res) => res.json());
 
 type SWRComponentProps = {
     videoId: string;
     time_start: number;
-    children: (data: VideoData | undefined, error: any, handleRefetch: () => void) => ReactNode;
+    children: (data: VideoData | undefined, error: any, handleRefetch: () => Promise<void>) => ReactNode;
 };
 
 const SWRComponent: React.FC<SWRComponentProps> = ({ videoId, time_start, children }) => {
     const turnstileRef = useRef<{ reset: () => void }>(null);
-    
+
     const [token, setToken] = useState<string | null>(null);
-    
+
     const { data, error, mutate } = useSWR<VideoData>(
         token ? [`https://${process.env.NEXT_PUBLIC_API_HOST}/v1/video/${videoId}`, token] : null,
         ([url, apiSecret]: [string, string]) => fetcher(url, apiSecret),
@@ -32,9 +33,9 @@ const SWRComponent: React.FC<SWRComponentProps> = ({ videoId, time_start, childr
         data.time_start = time_start;
     }
 
-    const handleRefetch = () => {
+    const handleRefetch = async () => {
         turnstileRef.current?.reset();
-        mutate();
+        await mutate(); // Await the mutation to ensure that it completes before proceeding
     };
 
     return (

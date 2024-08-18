@@ -33,7 +33,7 @@ const DescriptionItem = ({ text }: { text: string }) => {
                 </Accordion.Summary>
                 <Accordion.Content>
                     <Div>
-                        <Text className="whitespace-pre-wrap">
+                        <Text className="whitespace-pre-wrap select-text">
                             {text}
                         </Text>
                     </Div>
@@ -48,7 +48,7 @@ const _DescriptionItem = ({ data }: { data: VideoData | undefined }) => (
 )
 
 const Description = ({ data }: { data: VideoData | undefined }) => (
-    <Div className="max-w-full w-full m-auto mt-3">
+    <Div className="max-w-full w-full m-auto mt-0 md:mt-3">
         <Group className="m-0">
             <Meta data={data} />
             <_DescriptionItem data={data} />
