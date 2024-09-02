@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.13.2",
-    "@marsidev/react-turnstile": "^0.7.2",
+    "@marsidev/react-turnstile": "^1.0.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@vidstack/react": "^1.12.9",
     "@vkontakte/icons": "^2.133.0",
